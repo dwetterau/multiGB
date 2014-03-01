@@ -3,7 +3,6 @@ window.all_moves = {};
 // socket setup
 
 window.socket = io.connect('http://localhost:3000');
-console.log("got connected, sending start");
 window.socket.emit("start", { 
     room_id: window.room_id, 
     state_move: window.last_move
@@ -18,7 +17,6 @@ window.socket.on("move_list", function(data) {
 });
 
 window.socket.on("new_move", function(data) {
-  console.log("got a new move!", data);
   window.all_moves[data.seq_num] = data.move;
 });
 
@@ -36,18 +34,14 @@ window.send_move = function(move) {
     room_id: window.room_id,
     move_num: move
   };
-  console.log("sending an add_move");
   window.socket.emit("add_move", data);
 }
 
 window.do_move = function() {
-  console.log("doing a move");
   if (window.all_moves[window.last_move + 1]) {
-    console.log("have a move to do...");
     window.process_keys([window.all_moves[window.last_move + 1]]);
     delete window.all_moves[window.last_move];
     window.last_move++;
-    console.log("new last_move=", window.last_move);
   } else {
     if (Math.random() < .1) {
       window.get_next_move();

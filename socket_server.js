@@ -6,7 +6,6 @@ var state = {};
 
 io.on('connection', function(socket) {
   socket.on("start", function(data) {
-    console.log("got a start message");
     socket.join('room:' + data.room_id);
     if (!state[data.room_id]) {
       state[data.room_id] = {
