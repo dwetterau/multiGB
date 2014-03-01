@@ -5776,7 +5776,7 @@ GameBoyCore.prototype.run = function () {
 GameBoyCore.prototype.executeIteration = function () {
 	// update queue
 	this.keyCounter++;
-	this.keyCounter %= this.keyDelta;
+	this.keyCounter %= this.keyDelta * this.keyDelta;
 	if (this.keyCounter == 0 && this.controlQueue.length > 0) {
 		this.JoyPadEvent(this.controlQueue.shift(), true);
 	}
