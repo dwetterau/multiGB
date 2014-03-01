@@ -10,14 +10,14 @@
                         var binaryHandle = new FileReader();
                         binaryHandle.onload = function () {
                             if (this.readyState == 2) {
-                                start(mainCanvas, this.result);
+                                start_wrapper(mainCanvas, this.result);
                             }
                         }
                         binaryHandle.readAsBinaryString(this.files[this.files.length - 1]);
                     } catch (error) {
                         //Gecko 1.9.0, 1.9.1 (Non-Standard Method)
                         var romImageString = this.files[this.files.length - 1].getAsBinary();
-                        start(mainCanvas, romImageString);
+                        start_wrapper(mainCanvas, romImageString);
                     }
                 }
             }
@@ -51,7 +51,7 @@
               bindata += String.fromCharCode.apply(null, resp_dataview.subarray(chunks*chunksize));
               
               // jumps to gbc
-              start(mainCanvas, bindata);
+              start_wrapper(mainCanvas, bindata);
             }
             file_req.send();
           },
@@ -62,4 +62,13 @@
         var button = Dropbox.createChooseButton(options);
         document.getElementById("dropbox-container").appendChild(button);
     })();
+
+    function start_wrapper(mainCanvas, bindata) {
+        $("#gif").fadeOut("fast", function() {
+            $("#mainCanvas").fadeIn("fast", function() {
+                start(mainCanvas, bindata);
+            });
+        });
+    }
+
 }());
