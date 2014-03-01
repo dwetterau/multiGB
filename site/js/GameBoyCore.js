@@ -5074,11 +5074,9 @@ GameBoyCore.prototype.graphicsBlit = function () {
 }
 
 GameBoyCore.prototype.enqueueJoyPadEvent = function(key) {
-	//window.console.log("queue " + key);
 	this.controlQueue.push(key);
 };
 GameBoyCore.prototype.JoyPadEvent = function (key, down) {
-	//window.console.log("handle " + key);
 	if (down) {
 		this.JoyPad &= 0xFF ^ (1 << key);
 		//this.lastFrameControls |= (1 << key);
@@ -5857,20 +5855,6 @@ GameBoyCore.prototype.executeIteration = function () {
 }
 GameBoyCore.prototype.iterationEndRoutine = function () {
 	if ((this.stopEmulator & 0x1) == 0) {
-		//window.console.log("stop emulator happening");
-		// turn off controls just used
-		/*if (this.JoyPad != 0xFF) {
-			window.console.log(this.JoyPad);
-			window.console.log(this.turnOffControls);
-			window.console.log(this.controlQueue);
-		}*/
-		//this.JoyPad |= this.turnOffControls;
-		//this.memory[0xFF00] = (this.memory[0xFF00] & 0x30) + ((((this.memory[0xFF00] & 0x20) == 0) ? (this.JoyPad >> 4) : 0xF) & (((this.memory[0xFF00] & 0x10) == 0) ? (this.JoyPad & 0xF) : 0xF));
-		/*this.controlQueue.push(this.lastFrameControls);
-		this.lastFrameControls = 0;
-		if (this.controlQueue.length < 5)
-			this.turnOffControls = this.controlQueue.shift();*/
-		//this.JoyPad &= (0xFF ^ this.turnOffControls);
 		for (var i = 0; i < 8; i++) {
 			if (this.lastUsedAgo[i] >= 0) {
 				if (this.lastUsedAgo[i] == 0) {
