@@ -274,6 +274,7 @@ function GameBoyCore(canvas, ROMImage) {
 
 	// OUR MODIFICATIONS
 	this.turnOffControls = 0;
+	this.controlQueue = 0;
 }
 GameBoyCore.prototype.GBBOOTROM = [		//GB BOOT ROM
 	//Add 256 byte boot rom here if you are going to use it.
@@ -5066,8 +5067,8 @@ GameBoyCore.prototype.graphicsBlit = function () {
 }
 GameBoyCore.prototype.JoyPadEvent = function (key, down) {
 	if (down) {
-		this.JoyPad &= 0xFF ^ (1 << key);
-		this.turnOffControls |= (1 << key);
+		//this.JoyPad &= 0xFF ^ (1 << key);
+		this.controlQueue |= (1 << key);
 		if (!this.cGBC && (!this.usedBootROM || !this.usedGBCBootROM)) {
 			this.interruptsRequested |= 0x10;	//A real GBC doesn't set this!
 			this.remainingClocks = 0;
@@ -5077,7 +5078,8 @@ GameBoyCore.prototype.JoyPadEvent = function (key, down) {
 	else {
 		this.JoyPad |= (1 << key);
 	}
-	this.memory[0xFF00] = (this.memory[0xFF00] & 0x30) + ((((this.memory[0xFF00] & 0x20) == 0) ? (this.JoyPad >> 4) : 0xF) & (((this.memory[0xFF00] & 0x10) == 0) ? (this.JoyPad & 0xF) : 0xF));
+
+	//this.memory[0xFF00] = (this.memory[0xFF00] & 0x30) + ((((this.memory[0xFF00] & 0x20) == 0) ? (this.JoyPad >> 4) : 0xF) & (((this.memory[0xFF00] & 0x10) == 0) ? (this.JoyPad & 0xF) : 0xF));
 	//this.JoyPad |= (1 << key);
 	this.CPUStopped = false;
 }
@@ -5760,6 +5762,12 @@ GameBoyCore.prototype.run = function () {
 	}
 }
 GameBoyCore.prototype.executeIteration = function () {
+	// update queue
+	this.turnOffControls = this.controlQueue;
+	this.controlQueue = 0;
+	this.JoyPad &= (0xFF ^ this.turnOffControls);
+
+	this.memory[0xFF00] = (this.memory[0xFF00] & 0x30) + ((((this.memory[0xFF00] & 0x20) == 0) ? (this.JoyPad >> 4) : 0xF) & (((this.memory[0xFF00] & 0x10) == 0) ? (this.JoyPad & 0xF) : 0xF));
 	//Iterate the interpreter loop:
 	var opcodeToExecute = 0;
 	var timedTicks = 0;
@@ -5835,9 +5843,9 @@ GameBoyCore.prototype.iterationEndRoutine = function () {
 	if ((this.stopEmulator & 0x1) == 0) {
 		//window.console.log("stop emulator happening");
 		// turn off controls just used
-		if (this.JoyPad != 0)
+		if (this.JoyPad != 0xFF)
 			window.console.log(this.JoyPad);
-		//this.JoyPad |= this.turnOffControls;
+		this.JoyPad |= this.turnOffControls;
 		this.turnOffControls = 0;
 		//this.memory[0xFF00] = (this.memory[0xFF00] & 0x30) + ((((this.memory[0xFF00] & 0x20) == 0) ? (this.JoyPad >> 4) : 0xF) & (((this.memory[0xFF00] & 0x10) == 0) ? (this.JoyPad & 0xF) : 0xF));
 		this.audioJIT();	//Make sure we at least output once per iteration.
