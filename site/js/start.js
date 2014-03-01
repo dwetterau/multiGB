@@ -32,6 +32,7 @@
     function transitionPage() {
         // convert page
         $("#pre-game").fadeOut('fast', function () {
+            $("#gif").attr("src", "images/gameboy.gif");
             $("#main-content").fadeIn();
         });
     }
