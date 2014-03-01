@@ -32,7 +32,9 @@
                     <!-- get trashed -->
                     <div class="col-md-7">
                         <!-- <img src="http://i.imgur.com/bcpvcbi.png?2" /> -->
-                        <img id="init-gif" src="images/static-tv.gif" />
+                        <div class="mobile-magic">
+                            <img id="init-gif" src="images/static-tv.gif" />
+                        </div>
                     </div>
 
                     <div class="col-md-4">
@@ -43,20 +45,78 @@
 
                 </div>
                 <div class="content" id="main-content">
-                    <div class="col-md-7">
+                    <div class="col-md-7 no-pad-left">
                         <div id="canvas-wrap">
                             <img id="gif" src="http://placehold.it/395x304" />
-                            <canvas id="mainCanvas" width="395" height="304"></canvas>
+                            <canvas id="mainCanvas" width="394" height="304"></canvas>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="visible-xs" id="mobile-controls">
                             <!-- add gbc controls -->
-                            <img src="http://placehold.it/100x100" />
-                            <img src="http://placehold.it/100x100" />
+                            <div class="row">
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-2">
+                                    <div id="up-button">
+                                        <img class="button" src="images/black.png" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-2">
+                                    <div id="a-button">
+                                        <img class="button" src="images/a.png" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <div id="left-button">
+                                        <img class="button" src="images/black.png" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div id="nothing">
+                                        <img class="button" src="images/black.png" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div id="right-button">
+                                        <img class="button" src="images/black.png" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-2">
+                                    <div id="b-button">
+                                        <img class="button" src="images/b.png" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-2"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-2">
+                                    <div id="down-button">
+                                        <img class="button" src="images/black.png" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-2">
+                                    <div id="start-button">
+                                        <img class="button" src="images/start.png" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div id="select-button">
+                                        <img class="button" src="images/select.png" />
+                                    </div>
+                                </div>
+                            </div>   
                         </div>
 
-                        <div class="push-right">
+                        <div id="rom-holder" class="push-right">
                             <div id="rom-done">
                                 <h3><span class="label label-success">Share the link with your friends!</span></h3>
                             </div>
@@ -77,24 +137,26 @@
                                 </button>
                             </div>
 
-                            <div id="chat-settings">
-                                <h3><span class="label label-default">Chat with Friends!</span></h3>
-                                <form id="chat-form" class="form-inline" role="form">
-                                    <div class="form-group">
-                                        <div class="col-sm-10">
-                                            <input class="form-control" id="chat-name" placeholder="Ash Ketchum" />
+                            <div class="hidden-xs">
+                                <div id="chat-settings">
+                                    <h3><span class="label label-default">Chat with Friends!</span></h3>
+                                    <form id="chat-form" class="form-inline" role="form">
+                                        <div class="form-group">
+                                            <div class="col-sm-10">
+                                                <input class="form-control" id="chat-name" placeholder="Ash Ketchum" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-10">
-                                            <input class="form-control" id="chat-message" placeholder="Gotta catch 'em all!" />
+                                        <div class="form-group">
+                                            <div class="col-sm-10">
+                                                <input class="form-control" id="chat-message" placeholder="Gotta catch 'em all!" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <input type="submit" disabled="disabled" id="send-chat" type="submit" class="btn btn-default" value="Send" />
-                                </form>
-                            </div>
+                                        <input type="submit" disabled="disabled" id="send-chat" type="submit" class="btn btn-default" value="Send" />
+                                    </form>
+                                </div>
 
-                            <div id="chatlog">
+                                <div id="chatlog">
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -28,7 +28,42 @@
         // convert page
         $("#pre-game").fadeOut('fast', function () {
             $("#gif").attr("src", "images/gameboy.gif");
-            $("#main-content").fadeIn();
+            $("#main-content").fadeIn('fast', function() {
+
+                var top = $('#canvas-wrap').offset().top;
+                console.log($('#canvas-wrap').offset());
+                console.log(top);
+                $(window).scrollTop( top );
+
+                $(".button").click(function(ev) {
+                  ev.preventDefault();
+                  // button pressed
+                  var button = $(this).parent().attr("id").split("-")[0];
+                  if (button == "nothing") return;
+                  
+                  // make event
+                  console.log(button);
+
+                  if (button == "left") {
+                    window.send_move(1);
+                  } else if (button == "right") {
+                    window.send_move(0);
+                  } else if (button == "up") {
+                    window.send_move(2);
+                  } else if (button == "down") {
+                    window.send_move(3);
+                  } else if (button == "a") {
+                    window.send_move(4);
+                  } else if (button == "b'") {
+                    window.send_move(5);
+                  } else if (button == "start") {
+                    window.send_move(7);
+                  } else if (button == "select") {
+                    window.send_move(6);
+                  }
+
+                });
+            });
         });
 
         $('#chat-form').submit(function(ev) {
