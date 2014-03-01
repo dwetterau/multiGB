@@ -20,7 +20,6 @@ app.get('/make_room', function(req, res) {
       var new_count = body.count;
       db.insert(body, 'room_count', function(err, body) {
         if (!err) {
-          console.log(body);
           var id = "room:" + new_count;
           db.insert({last_move: 0, state: undefined}, id, function(err, body) {
             if (!err) {
@@ -37,6 +36,17 @@ app.get('/make_room', function(req, res) {
       send_error(res, err);  
     }
   });  
+});
+
+app.get('/room/:id', function(req, res) {
+  var room_id = "room:" + req.params.id;
+  db.get(room_id, { revs_info: true }, function(err, body) {
+    if (!err) {
+      res.send({status: 'ok', room: body});
+    } else {
+      send_error(res, err);
+    }
+  });
 });
 
 app.post('/update_room', function(req, res) {
