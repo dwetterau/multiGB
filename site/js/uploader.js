@@ -67,6 +67,13 @@
         $("#gif").fadeOut("fast", function() {
             $("#mainCanvas").fadeIn("fast", function() {
                 start(mainCanvas, bindata);
+                $("#choose-rom").fadeOut("fast", function(){
+                  $("#rom-done").fadeIn("fast", function(){
+                    $("#mobile-controls").fadeIn("fast");
+                    $("#settings").fadeIn("fast");
+                    main();
+                  });
+                });
             });
         });
     }

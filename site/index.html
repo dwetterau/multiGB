@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <title>FB ATX Hackathon 2014</title>
-    <link rel="shortcut icon" href="http://placehold.it/50x50" />
+    <link rel="shortcut icon" href="logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -23,7 +23,8 @@
     <div id="wrap">
         <div class="container-fluid container-narrow">
             <div class="page-header">
-                <h1>Generic Application</h1>
+                <img src="logo_text.png" />
+                <!-- <h1>Generic Application</h1> -->
             </div>
 
             <div class="row">
@@ -55,9 +56,12 @@
                         </div>
 
                         <div class="push-right">
+                            <div id="rom-done">
+                                <h3><span class="label label-success">Share the link with your friends!</span></h3>
+                            </div>
 
-                            <div id="choose_rom">
-                                <h3><span class="label label-primary" id="rom">Upload ROM</span></h3>
+                            <div id="choose-rom">
+                                <h3><span class="label label-default">Upload ROM</span></h3>
                                 <input type="file" id="local_file_open" />
 
                                 <div id="dropbox-container">
@@ -65,7 +69,7 @@
                             </div>
 
                             <div id="settings">
-                                <button type="button" class="btn btn-default">
+                                <button type="button" id="save-button" class="btn btn-default">
                                     <span class="glyphicon glyphicon-cloud"></span> Save Progress
                                 </button>
                             </div>

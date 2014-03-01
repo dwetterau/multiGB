@@ -21,8 +21,6 @@
             window.history.pushState({}, "FB ATX Hackathon 2014", '/?' + room_id);
             // ensure ui follows suit
             transitionPage();
-            // change flow to main page
-            main(room_id);
         });
     });
 
@@ -45,40 +43,51 @@
             // once again, set window
             window.room_id = room_id;
             transitionPage();
-            
-            // ensure page is ready
-            $(document).ready(function() {
-                main(room_id);
-            });
         } else {
             $("#pre-game").fadeIn('fast');
         }
     })();
+})();
 
-    // function to begin main page logic
-    function main(room_id) {
-        if (window.room_id != room_id) {
-            console.log("Conflicting room id!!!")
-            console.log("window.room_id = " + window.room_id + "| room_id = " + room_id);
+// function to begin main page logic
+function main() {
+    // make get request for room information
+    $.get('/room/' + window.room_id, function(data) {
+        // was there an issue?
+        if (data.status != 'ok') {
+            console.log("There is a problem, /make_room returned: " + data.status);
+            console.log("Halting...");
+            return;
         }
 
-        // make get request for room information
-        $.get('/room/' + room_id, function(data) {
-            // was there an issue?
-            if (data.status != 'ok') {
-                console.log("There is a problem, /make_room returned: " + data.status);
-                console.log("Halting...");
-                return;
-            }
+        // set the last move
+        window.last_move = data.room.last_move;
 
-            // set the last move
-            window.last_move = data.room.last_move;
+        // we need to load game state
+        if (data.room.state != undefined) {
+            // load state into gbc
+            // TODO can't happen until upload rom
+            window.loadState(data.room.state);
+        }
+    });
+    
+    $("#save-button").click(function() {
+        saveProgress();
+    });
+}
 
-            // we need to load game state
-            if (data.room.state != undefined) {
-                // load state into gbc
-                window.loadState(data.room.state);
-            }
-        });
-    }
-})();
+function saveProgress() {
+    console.log("Saving...");
+    var data = {
+        id: window.room_id,
+        state: window.dumpState(),
+        last_move: window.last_move
+    };
+
+    $.post('/update_room', {
+        data: data,
+        success: function() {
+            console.log("room updated");
+        }
+    });
+}

@@ -41,10 +41,11 @@
 
 #mobile-controls {
     margin-bottom: 20px;
+    display: none;
 }
 
 #settings {
-    margin-top: 10px;
+    margin-top: 15px;
     display: none;
 }
 
@@ -67,4 +68,8 @@
 #gif {
     width: 395px;
     height: 304px;   
+}
+
+#rom-done {
+    display: none;
 }
