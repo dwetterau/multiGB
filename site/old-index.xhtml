@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
     <head>
         <style type="text/css">@import url(&quot;css/GameBoy.css&quot;);</style>
+        <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="zes5lg9zr6j2jvf" />
         <script type="text/javascript">
     var DEBUG_MESSAGES = false;
     var DEBUG_WINDOWING = false;
@@ -24,6 +25,12 @@
         <title>GameBoy Online</title>
     </head>
     <body>
+      <div id="choose_rom">
+        <span> Local File Open: </span>
+        <form> <input type="file" id="local_file_open" /> </form>
+        <span id="dropbox_file_chooser_container"> Dropbox File Open: </span>
+        <form> <input type="button" id="dropbox_file_open"> Browse </input> </form>
+      </div>
         <div id="GameBoy" class="window">
             <div class="menubar">
                 <span id="GameBoy_file_menu">File</span>

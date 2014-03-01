@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=320, initial-scale=1"/>
+	<title>multiGB</title>
+	<style type="text/css">
+		body {
+			background: #EEE;
+			margin-top: 10%;
+		}	
+	</style>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>	
+  <h1> multiGB </h1>
+	<form id="make_room">
+    <input id="make_room_button" type="submit" value="Make Room">
+  </form>
+  <form id="update_room">
+    Room id: <input type="text" id="id" name="id" /><br>
+    Emu data: <input type="text" id="data" name="data" /><br>
+    Last move: <input type="text" id="move" name="move" /><br>
+    <input id="update_room_button" type="submit" value="Update Room">
+  </form>
+  <script type= "text/javascript" defer>
+  $('#make_room').submit(function(ev) {
+    $.get('/make_room', {}, function(data) {
+      console.log(data);
+    });    
+    ev.preventDefault();
+  });
+ 
+  $('#update_room').submit(function(ev) {
+    var data = {
+      id: $('#id').val(),
+      state: $('#data').val(),
+      last_move: $('#move').val() * 1
+    };
+    $.post('/update_room', data, function(res) {
+      console.log(res);
+    });    
+    ev.preventDefault();
+  });
+  </script>
+	</body>
+</html>
