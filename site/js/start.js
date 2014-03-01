@@ -76,6 +76,9 @@ function load_game_js() {
   s.parentNode.insertBefore(item_key, s);
   
   setInterval(function() {
+    if (!window.do_move) {
+      return;
+    }
     window.do_move();
   }, 40); //25 moves / sec goal
   window.already_loaded_before = true;

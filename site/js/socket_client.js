@@ -3,8 +3,8 @@ window.all_moves = {};
 
 // socket setup
 
-window.socket = io.connect('http://multigb.dwett.com:3000');
-//window.socket = io.connect('http://localhost:3000');
+//window.socket = io.connect('http://multigb.dwett.com:3000');
+window.socket = io.connect('http://localhost:3000');
 window.socket.on('youare', function(data) {
 	window.client_num = data.client_num;
 }); 
