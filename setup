@@ -1,0 +1,8 @@
+// install couchdb
+
+curl -X PUT http://localhost:5984/multigb
+
+//insert room_count with count: 0
+
+npm install express
+npm install nano
