@@ -7,7 +7,7 @@ var nano = require('nano')('http://localhost:5984');
 var db = nano.use('multigb');
 
 app.use(express.bodyParser());
-app.use('/', express.static(__dirname + '/'));
+app.use('/', express.static(__dirname + '/site/'));
 
 function send_error(res, err) {
   res.send({status: "fail", err: err});
