@@ -130,7 +130,7 @@ function registerGUIEvents() {
         file_req.open("GET", file.link, true);
         file_req.responseType = "arraybuffer";
         file_req.onload = function(e) {
-          var resp_dataview = Uint8Array(file_req.response);
+          var resp_dataview = new Uint8Array(file_req.response);
           if (typeof resp_dataview == "undefined") {
             alert("File upload failed (undefined): check file type?");
           }
@@ -145,7 +145,6 @@ function registerGUIEvents() {
           start(mainCanvas, bindata);
         }
         file_req.send();
-        document.getElementById("dropbox_file_open").innerHTML = file_req.responseText;
       },
       multiselect: false,
       linkType: "direct",
