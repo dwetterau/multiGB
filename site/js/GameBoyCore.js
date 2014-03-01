@@ -274,7 +274,14 @@ function GameBoyCore(canvas, ROMImage) {
 
 	// OUR MODIFICATIONS
 	this.turnOffControls = 0;
-	this.controlQueue = 0;
+	this.controlQueue = new Array();
+	//this.lastFrameControls = 0;
+	this.keyCounter = 0;
+	this.keyDelta = 5;
+	this.lastUsedAgo = new Array();
+	for (var i = 0; i < 8; i++) {
+		this.lastUsedAgo[i] = -1;
+	}
 }
 GameBoyCore.prototype.GBBOOTROM = [		//GB BOOT ROM
 	//Add 256 byte boot rom here if you are going to use it.
@@ -5065,10 +5072,17 @@ GameBoyCore.prototype.graphicsBlit = function () {
 		this.drawContextOnscreen.drawImage(this.canvasOffscreen, 0, 0, this.onscreenWidth, this.onscreenHeight);
 	}
 }
+
+GameBoyCore.prototype.enqueueJoyPadEvent = function(key) {
+	//window.console.log("queue " + key);
+	this.controlQueue.push(key);
+};
 GameBoyCore.prototype.JoyPadEvent = function (key, down) {
+	//window.console.log("handle " + key);
 	if (down) {
-		//this.JoyPad &= 0xFF ^ (1 << key);
-		this.controlQueue |= (1 << key);
+		this.JoyPad &= 0xFF ^ (1 << key);
+		//this.lastFrameControls |= (1 << key);
+		this.lastUsedAgo[key] = this.keyDelta;
 		if (!this.cGBC && (!this.usedBootROM || !this.usedGBCBootROM)) {
 			this.interruptsRequested |= 0x10;	//A real GBC doesn't set this!
 			this.remainingClocks = 0;
@@ -5076,10 +5090,10 @@ GameBoyCore.prototype.JoyPadEvent = function (key, down) {
 		}
 	}
 	else {
-		this.JoyPad |= (1 << key);
+		//this.JoyPad |= (1 << key);
 	}
 
-	//this.memory[0xFF00] = (this.memory[0xFF00] & 0x30) + ((((this.memory[0xFF00] & 0x20) == 0) ? (this.JoyPad >> 4) : 0xF) & (((this.memory[0xFF00] & 0x10) == 0) ? (this.JoyPad & 0xF) : 0xF));
+	this.memory[0xFF00] = (this.memory[0xFF00] & 0x30) + ((((this.memory[0xFF00] & 0x20) == 0) ? (this.JoyPad >> 4) : 0xF) & (((this.memory[0xFF00] & 0x10) == 0) ? (this.JoyPad & 0xF) : 0xF));
 	//this.JoyPad |= (1 << key);
 	this.CPUStopped = false;
 }
@@ -5763,11 +5777,12 @@ GameBoyCore.prototype.run = function () {
 }
 GameBoyCore.prototype.executeIteration = function () {
 	// update queue
-	this.turnOffControls = this.controlQueue;
-	this.controlQueue = 0;
-	this.JoyPad &= (0xFF ^ this.turnOffControls);
+	this.keyCounter++;
+	this.keyCounter %= this.keyDelta;
+	if (this.keyCounter == 0 && this.controlQueue.length > 0) {
+		this.JoyPadEvent(this.controlQueue.shift(), true);
+	}
 
-	this.memory[0xFF00] = (this.memory[0xFF00] & 0x30) + ((((this.memory[0xFF00] & 0x20) == 0) ? (this.JoyPad >> 4) : 0xF) & (((this.memory[0xFF00] & 0x10) == 0) ? (this.JoyPad & 0xF) : 0xF));
 	//Iterate the interpreter loop:
 	var opcodeToExecute = 0;
 	var timedTicks = 0;
@@ -5837,17 +5852,36 @@ GameBoyCore.prototype.executeIteration = function () {
 		if (this.emulatorTicks >= this.CPUCyclesTotal) {
 			this.iterationEndRoutine();
 		}
+
 	}
 }
 GameBoyCore.prototype.iterationEndRoutine = function () {
 	if ((this.stopEmulator & 0x1) == 0) {
 		//window.console.log("stop emulator happening");
 		// turn off controls just used
-		if (this.JoyPad != 0xFF)
+		/*if (this.JoyPad != 0xFF) {
 			window.console.log(this.JoyPad);
-		this.JoyPad |= this.turnOffControls;
-		this.turnOffControls = 0;
+			window.console.log(this.turnOffControls);
+			window.console.log(this.controlQueue);
+		}*/
+		//this.JoyPad |= this.turnOffControls;
 		//this.memory[0xFF00] = (this.memory[0xFF00] & 0x30) + ((((this.memory[0xFF00] & 0x20) == 0) ? (this.JoyPad >> 4) : 0xF) & (((this.memory[0xFF00] & 0x10) == 0) ? (this.JoyPad & 0xF) : 0xF));
+		/*this.controlQueue.push(this.lastFrameControls);
+		this.lastFrameControls = 0;
+		if (this.controlQueue.length < 5)
+			this.turnOffControls = this.controlQueue.shift();*/
+		//this.JoyPad &= (0xFF ^ this.turnOffControls);
+		for (var i = 0; i < 8; i++) {
+			if (this.lastUsedAgo[i] >= 0) {
+				if (this.lastUsedAgo[i] == 0) {
+					this.JoyPad |= (1 << i);
+				}
+				this.lastUsedAgo[i]--;
+			}
+		}
+
+		//this.memory[0xFF00] = (this.memory[0xFF00] & 0x30) + ((((this.memory[0xFF00] & 0x20) == 0) ? (this.JoyPad >> 4) : 0xF) & (((this.memory[0xFF00] & 0x10) == 0) ? (this.JoyPad & 0xF) : 0xF));
+
 		this.audioJIT();	//Make sure we at least output once per iteration.
 		//Update DIV Alignment (Integer overflow safety):
 		this.memory[0xFF04] = (this.memory[0xFF04] + (this.DIVTicks >> 8)) & 0xFF;

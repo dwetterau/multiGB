@@ -353,11 +353,17 @@ function GameBoyEmulatorInitialized() {
 function GameBoyEmulatorPlaying() {
 	return ((gameboy.stopEmulator & 2) == 0);
 }
+// add this to window
+window.processKeys = function(list) {
+	for (var i = 0; i < list.length; i++)
+		gameboy.enqueueJoyPadEvent(list[i]);
+};
 function GameBoyKeyDown(key) {
 	if (GameBoyEmulatorInitialized() && GameBoyEmulatorPlaying()) {
 		var keycode = matchKey(key);
 		if (keycode >= 0 && keycode < 8) {
-			gameboy.JoyPadEvent(keycode, true);
+			//gameboy.JoyPadEvent(keycode, true);
+			gameboy.enqueueJoyPadEvent(keycode);
 		}
 	}
 }
