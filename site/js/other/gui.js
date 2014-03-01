@@ -120,6 +120,38 @@ function registerGUIEvents() {
 	addEvent("blur", document.getElementById("input_select"), function () {
 		windowStacks[4].hide();
 	});
+	addEvent("click", document.getElementById("dropbox_file_open"), function () {
+    var options = {
+      success: function(files) {
+        var file_req = new XMLHttpRequest();
+        // files is an array
+        var file = files[0];
+        //request file data
+        file_req.open("GET", file.link, true);
+        file_req.responseType = "arraybuffer";
+        file_req.onload = function(e) {
+          var resp_dataview = Uint8Array(file_req.response);
+          if (typeof resp_dataview == "undefined") {
+            alert("File upload failed (undefined): check file type?");
+          }
+          var chunksize = 65536;
+          var chunks = Math.floor(file.bytes/chunksize);
+          var bindata = "";
+          for (var i = 0; i < chunks; i++) {
+            bindata += String.fromCharCode.apply(null, resp_dataview.subarray(i*chunksize, (i+1)*chunksize));
+          }
+          bindata += String.fromCharCode.apply(null, resp_dataview.subarray(chunks*chunksize));
+          initPlayer();
+          start(mainCanvas, bindata);
+        }
+        file_req.send();
+        document.getElementById("dropbox_file_open").innerHTML = file_req.responseText;
+      },
+      multiselect: false,
+      linkType: "direct",
+    }
+    Dropbox.choose(options);
+  });
 	addEvent("change", document.getElementById("local_file_open"), function () {
 		windowStacks[4].hide();
 		if (typeof this.files != "undefined") {
