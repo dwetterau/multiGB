@@ -2,7 +2,8 @@ window.all_moves = {};
 
 // socket setup
 
-window.socket = io.connect('http://multigb.dwett.com:3000');
+//window.socket = io.connect('http://multigb.dwett.com:3000');
+window.socket = io.connect('http://localhost:3000');
 window.socket.emit("start", { 
     room_id: window.room_id, 
     state_move: window.last_move
@@ -49,9 +50,7 @@ window.do_move = function() {
     delete window.all_moves[window.last_move];
     window.last_move++;
   } else {
-    if (Math.random() < .1) {
-      window.get_next_move();
-    }
+    window.get_next_move();
   }
 }
 

@@ -51,29 +51,56 @@
 
 // function to begin main page logic
 function main() {
-    // make get request for room information
-    $.get('/room/' + window.room_id, function(data) {
-        // was there an issue?
-        if (data.status != 'ok') {
-            console.log("There is a problem, /make_room returned: " + data.status);
-            console.log("Halting...");
-            return;
-        }
-
-        // set the last move
-        window.last_move = data.room.last_move;
-
-        // we need to load game state
-        if (data.room.state != undefined) {
-            // load state into gbc
-            // TODO can't happen until upload rom
-            window.loadState(data.room.state);
-        }
-    });
+    loadProgress();  
     
     $("#save-button").click(function() {
         saveProgress();
     });
+}
+
+function load_game_js() {
+  var item_socket = document.createElement('script');
+  item_socket.type = "text/javascript";
+  item_socket.async = true;
+  item_socket.src = '/js/socket_client.js';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(item_socket, s);
+
+  var item_key = document.createElement('script');
+  item_key.type = "text/javascript";
+  item_key.async = true;
+  item_key.src = '/js/key_trap.js';
+  s.parentNode.insertBefore(item_key, s);
+  
+  setTimeout(function() {
+    saveProgress();
+  }, 100);
+  setInterval(function() {
+    window.do_move();
+  }, 40); //25 moves / sec goal
+}
+
+function loadProgress() {
+  // make get request for room information
+  $.get('/room/' + window.room_id, function(data) {
+      // was there an issue?
+      if (data.status != 'ok') {
+          console.log("There is a problem, /make_room returned: " + data.status);
+          console.log("Halting...");
+          return;
+      }
+
+      // set the last move
+      window.last_move = data.room.last_move;
+
+      // we need to load game state
+      if (data.room.state != undefined) {
+          // load state into gbc
+          // TODO can't happen until upload rom
+          window.loadState(data.room.state);
+      }
+      load_game_js();
+  });
 }
 
 function saveProgress() {
@@ -84,10 +111,7 @@ function saveProgress() {
         last_move: window.last_move
     };
 
-    $.post('/update_room', {
-        data: data,
-        success: function() {
-            console.log("room updated");
-        }
+    $.post('/update_room', data, function(res) {
+        window.i_saved(data.last_move);  
     });
 }
