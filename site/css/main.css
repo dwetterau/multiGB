@@ -1,0 +1,40 @@
+.push-right {
+    width: 300px;
+    margin: 20px auto;
+}
+
+.badge-green {
+    background-color: #eee;
+    color: #5cb85c;
+    font-size: 13px;
+}
+
+.badge-red {
+    background-color: #eee;
+    color: #d9534f;
+    font-size: 13px;
+}
+
+@media (min-width: 768px) {
+  .container-narrow {
+    max-width: 730px;
+  }
+}
+
+#container-nopad {
+    display: none;
+    padding-top: 0px !important;
+}
+
+#omit-border {
+    border: 0px;
+    padding-bottom: 0px;
+}
+
+#mobile-controls {
+    margin-bottom: 20px;
+}
+
+#settings {
+    margin-top: 10px;
+}
