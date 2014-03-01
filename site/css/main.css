@@ -78,3 +78,22 @@
 #rom-done {
     display: none;
 }
+
+#chatlog {
+    height: 300px;
+    overflow-y: scroll;
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+.form-group {
+    margin-top: 5px;
+}
+
+.shift-right {
+    margin-left: 15px;
+}
+
+#send-chat {
+    margin-top: 5px;
+}
