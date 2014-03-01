@@ -2,6 +2,7 @@ var app = require('express')()
   , server = require('http').createServer(app)
   , io = require('socket.io').listen(server);
 
+io.set('log level', 2);
 var state = {};
 
 var clientnum = 0;

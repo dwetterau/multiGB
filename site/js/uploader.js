@@ -81,9 +81,20 @@
 }());
 
 window.dumpState = function() {
-  return JSON.stringify(gameboy.saveState());
+  return Iuppiter.Base64.encode(
+      Iuppiter.compress(
+          JSON.stringify(
+              gameboy.saveState()
+          )
+      ), true);
 };
 
 window.loadState = function(s) {
-  loadGameboyState(JSON.parse(s), mainCanvas);
+  var start = new Date().getTime();
+  var byte_array = Iuppiter.toByteArray(s);
+  var base64_decode = Iuppiter.Base64.decode(byte_array, true);
+  var decompressed = Iuppiter.decompress(base64_decode);
+  var parsed = JSON.parse(decompressed);
+  loadGameboyState(parsed, mainCanvas);
+  console.log("loadState took:", new Date().getTime() - start);
 };
