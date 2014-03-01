@@ -30,6 +30,20 @@
             $("#gif").attr("src", "images/gameboy.gif");
             $("#main-content").fadeIn();
         });
+
+        $('#chat-form').submit(function(ev) {
+            ev.preventDefault();
+            var message = $("#chat-message").val();
+            console.log("Sending..." + message);
+            // send to whoever
+            if (window.send_chat == undefined) {
+              console.log("not ready come back later");
+              return;
+            }
+            window.send_chat(message);
+            // clear chat message
+            $("#chat-message").val("");
+        });
     }
 
     // check if url - only at start
@@ -59,7 +73,9 @@ function main() {
 }
 
 function load_game_js() {
+    console.log("loading more js now");
   if (window.already_loaded_before) {
+    console.log("window was already loaded, returning");
     return;
   }
   var item_socket = document.createElement('script');
@@ -75,6 +91,13 @@ function load_game_js() {
   item_key.src = '/js/key_trap.js';
   s.parentNode.insertBefore(item_key, s);
   
+  // cannot send until now (theoretically)
+  console.log("binding chat-form handler");
+
+  // enabled send button
+  console.log("enabled button");
+  $('#send-chat').removeAttr("disabled");
+
   setInterval(function() {
     if (!window.do_move) {
       return;
@@ -87,6 +110,7 @@ function load_game_js() {
 window.already_loaded_before = false;
 
 function loadProgress() {
+    console.log("Loading progress...");
   // make get request for room information
   $.get('/room/' + window.room_id, function(data) {
       // was there an issue?
@@ -105,6 +129,7 @@ function loadProgress() {
           // TODO can't happen until upload rom
           window.loadState(data.room.state);
       }
+      console.log("Loading js...");
       load_game_js();
   });
 }

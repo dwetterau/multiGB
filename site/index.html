@@ -63,16 +63,38 @@
 
                             <div id="choose-rom">
                                 <h3><span class="label label-default">Upload ROM</span></h3>
-                                <input type="file" id="local_file_open" />
+                                <div class="shift-right">
+                                    <input type="file" id="local_file_open" />
 
-                                <div id="dropbox-container">
+                                    <div id="dropbox-container">
+                                    </div>
                                 </div>
                             </div>
 
-                            <div id="settings">
+                            <div id="settings" class="shift-right">
                                 <button type="button" id="save-button" class="btn btn-default">
                                     <span class="glyphicon glyphicon-cloud"></span> Save Progress
                                 </button>
+                            </div>
+
+                            <div id="chat-settings">
+                                <h3><span class="label label-default">Chat with Friends!</span></h3>
+                                <form id="chat-form" class="form-inline" role="form">
+                                    <div class="form-group">
+                                        <div class="col-sm-10">
+                                            <input class="form-control" id="chat-name" placeholder="Ash Ketchum" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-10">
+                                            <input class="form-control" id="chat-message" placeholder="Gotta catch 'em all!" />
+                                        </div>
+                                    </div>
+                                    <input type="submit" disabled="disabled" id="send-chat" type="submit" class="btn btn-default" value="Send" />
+                                </form>
+                            </div>
+
+                            <div id="chatlog">
                             </div>
                         </div>
                     </div>

@@ -3,8 +3,8 @@ window.all_moves = {};
 
 // socket setup
 
-window.socket = io.connect('http://multigb.dwett.com:3000');
-//window.socket = io.connect('http://localhost:3000');
+//window.socket = io.connect('http://multigb.dwett.com:3000');
+window.socket = io.connect('http://localhost:3000');
 window.socket.on('youare', function(data) {
 	window.client_num = data.client_num;
 }); 
@@ -33,12 +33,13 @@ window.socket.on("new_move", function(data) {
   window.all_moves[data.seq_num] = data.move;
 });
 window.socket.on('receive_chat', function(data) {
-	if (data.clientnum != window.client_num) {
-		window.console.log('got message',data.message);
-		//$('chatlog').append("<div>"+data.message+"</div>");
-	} else {
-		window.console.log('got my own message back');
-	}
+  window.console.log('got message',data.message);
+  $('#chatlog').append("<div>"+data.message+"</div>");
+
+  var elem = document.getElementById('chatlog');
+    elem.scrollTop = elem.scrollHeight;
+    elem.scrollLeft = 0;
+
 });
 // window functions
 window.i_saved = function(save_move) {
@@ -50,6 +51,16 @@ window.i_saved = function(save_move) {
 }
 
 window.send_chat = function(message) {
+
+  if (message == '' || message == undefined) return;
+
+  var chat_name = $('#chat-name').val();
+  if (chat_name == undefined || chat_name == '') {
+    message = "<b>" + window.client_num + "</b>: "+ message;
+  } else {
+    message = "<b>" + chat_name + "</b>: " + message;
+  }
+
 	window.console.log('send chat');
 	var data = {
 		room_id: window.room_id,

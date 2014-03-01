@@ -15,6 +15,8 @@ app.get('/make_room', function(req, res) {
 
 app.get('/room/:id', function(req, res) {
   var room_id = "room:" + req.params.id;
+
+  res.send({status: "ok", room: {last_move: 0, state: undefined } });
 });
 
 app.post('/update_room', function(req, res) {
