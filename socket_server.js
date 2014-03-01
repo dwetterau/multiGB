@@ -4,7 +4,10 @@ var app = require('express')()
 
 var state = {};
 
+var clientnum = 0;
+
 io.on('connection', function(socket) {
+	socket.emit('youare', {client_num:clientnum++});
   socket.on("start", function(data) {
     socket.join('room:' + data.room_id);
     if (!state[data.room_id]) {
@@ -52,6 +55,10 @@ io.on('connection', function(socket) {
       list: moves_to_send
     });
   });
+	socket.on('send_chat', function(data) {
+		console.log('relaying message m');
+		io.sockets.in('room:'+data.room_id).emit('receive_chat', data);
+	});
 });
 
 server.listen(3000);
