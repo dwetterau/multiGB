@@ -277,7 +277,7 @@ function GameBoyCore(canvas, ROMImage) {
 	this.controlQueue = new Array();
 	//this.lastFrameControls = 0;
 	this.keyCounter = 0;
-	this.keyDelta = 5;
+	this.keyDelta = 3;
 	this.lastUsedAgo = new Array();
 	for (var i = 0; i < 8; i++) {
 		this.lastUsedAgo[i] = -1;
