@@ -75,9 +75,6 @@ function load_game_js() {
   item_key.src = '/js/key_trap.js';
   s.parentNode.insertBefore(item_key, s);
   
-  setTimeout(function() {
-    saveProgress();
-  }, 100);
   setInterval(function() {
     window.do_move();
   }, 40); //25 moves / sec goal
