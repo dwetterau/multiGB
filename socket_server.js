@@ -28,11 +28,14 @@ io.on('connection', function(socket) {
     var new_data = {
       seq_num: move,
       move: data.move_num
-    }
+    };
     if (!state[data.room_id*1].moves) {
       state[data.room_id*1].moves = {};
     }
     state[data.room_id*1].moves[move] = data.move_num;
+    if (move > 0 && move % 50 == 0) {
+      socket.emit('u_save', {});
+    }
     io.sockets.in('room:' + data.room_id*1).emit('new_move', new_data);
   });
 
@@ -44,6 +47,7 @@ io.on('connection', function(socket) {
     while (state[data.room_id*1].moves[move_to_nuke]) {
       delete state[data.room_id*1].moves[move_to_nuke--];
     }
+    io.sockets.in('room:' + data.room_id*1).emit('u_load', {});
   });
 
   socket.on("req_move", function(data) {

@@ -3,8 +3,8 @@ window.all_moves = {};
 
 // socket setup
 
-//window.socket = io.connect('http://multigb.dwett.com:3000');
-window.socket = io.connect('http://localhost:3000');
+window.socket = io.connect('http://multigb.dwett.com:3000');
+//window.socket = io.connect('http://localhost:3000');
 window.socket.on('youare', function(data) {
 	window.client_num = data.client_num;
 }); 
@@ -19,6 +19,14 @@ window.socket.on("move_list", function(data) {
       window.all_moves[data.list[i].seq_num] = data.list[i].move;
     }
   }
+});
+
+window.socket.on("u_save", function(data) {
+  window.saveProgress();
+});
+
+window.socket.on("u_load", function(data) {
+  window.loadProgress();
 });
 
 window.socket.on("new_move", function(data) {
