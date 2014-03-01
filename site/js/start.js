@@ -59,6 +59,9 @@ function main() {
 }
 
 function load_game_js() {
+  if (window.already_loaded_before) {
+    return;
+  }
   var item_socket = document.createElement('script');
   item_socket.type = "text/javascript";
   item_socket.async = true;
@@ -78,7 +81,10 @@ function load_game_js() {
   setInterval(function() {
     window.do_move();
   }, 40); //25 moves / sec goal
+  window.already_loaded_before = true;
 }
+
+window.already_loaded_before = false;
 
 function loadProgress() {
   // make get request for room information
@@ -110,8 +116,9 @@ function saveProgress() {
         state: window.dumpState(),
         last_move: window.last_move
     };
-
+    var start = new Date().getTime();
     $.post('/update_room', data, function(res) {
-        window.i_saved(data.last_move);  
+        window.i_saved(data.last_move);
+        console.log("saving took", new Date().getTime() - start);
     });
 }
