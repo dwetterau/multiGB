@@ -178,6 +178,13 @@ function openRTC(filename) {
 	}
 	return [];
 }
+function loadGameboyState(state, canvas) {
+  clearLastEmulation();
+  gameboy = new GameBoyCore(canvas, "");
+  gameboy.savedStateFilename = "Loaded From Server";
+  gameboy.returnFromState(state);
+  run();
+}
 function openState(filename, canvas) {
 	try {
 		if (findValue(filename) != null) {

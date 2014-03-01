@@ -49,6 +49,13 @@ function windowingInitialize() {
     document.getElementById("channel2").checked = settings[14][1];
     document.getElementById("channel3").checked = settings[14][2];
     document.getElementById("channel4").checked = settings[14][3];
+  window.dumpState = function() {
+    return JSON.stringify(gameboy.saveState());  
+  };
+  window.loadState = function(state) {
+    initPlayer();
+    loadGameboyState(JSON.parse(state), mainCanvas);
+  };
 }
 function registerGUIEvents() {
 	cout("In registerGUIEvents() : Registering GUI Events.", -1);
