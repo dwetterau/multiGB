@@ -213,17 +213,15 @@
         <div id="fullscreenContainer">
             <canvas id="fullscreen" class="maximum"/>
         </div>
-<a href="javascript:window.press_a();">press a</a>
 <script type="text/javascript">
   window.last_move = 12;
   window.room_id = 500;
 </script>
 <script src="/js/socket.io.min.js"></script>
 <script src="/js/socket_client.js"></script>
+<script src="/js/mousetrap.min.js"></script>
+<script src="/js/key_trap.js"></script>
 <script>
-  window.press_a = function() {
-    window.send_move(4);
-  };
   setInterval(function() {
     window.do_move();
   }, 40); //25 moves / sec goal

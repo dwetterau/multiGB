@@ -30,6 +30,12 @@ window.i_saved = function(save_move) {
 }
 
 window.send_move = function(move) {
+  if (window.last_do_move === undefined) {
+    window.last_do_move = new Date().getTime();
+  } else if (new Date().getTime() - window.last_do_move < 40) {
+    return;
+  }
+  window.last_do_move = new Date().getTime();
   var data = {
     room_id: window.room_id,
     move_num: move
@@ -38,7 +44,7 @@ window.send_move = function(move) {
 }
 
 window.do_move = function() {
-  if (window.all_moves[window.last_move + 1]) {
+  if (window.all_moves[window.last_move + 1] !== undefined) {
     window.process_keys([window.all_moves[window.last_move + 1]]);
     delete window.all_moves[window.last_move];
     window.last_move++;
