@@ -26,6 +26,14 @@
     padding-top: 0px !important;
 }
 
+.content {
+    display: none;
+}
+
+#pre-game {
+    display: none;
+}
+
 #omit-border {
     border: 0px;
     padding-bottom: 0px;
@@ -37,4 +45,13 @@
 
 #settings {
     margin-top: 10px;
+    display: none;
+}
+
+#rom {
+    background-color: #007ee5;
+}
+
+#dropbox-container {
+    padding-top: 10px;
 }

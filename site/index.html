@@ -16,6 +16,7 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+
   </head>
   <body>
 
@@ -26,22 +27,48 @@
             </div>
 
             <div class="row">
-                <div class="col-md-7">
-                    <img src="http://placehold.it/394x304" />
-                </div>
-                <div class="col-md-4">
-                    <div class="visible-xs visible-sm" id="mobile-controls">
-                        <!-- add gbc controls -->
-                        <img src="http://placehold.it/100x100" />
-                        <img src="http://placehold.it/100x100" />
+                <div id="pre-game">
+                    <!-- get trashed -->
+                    <div class="col-md-7">
+                        <img src="http://i.imgur.com/bcpvcbi.png?2" />
                     </div>
 
-                    <button type="button" class="btn btn-primary">Choose ROM</button>
+                    <div class="col-md-4">
+                        <div class="push-right">
+                            <button type="button" id="create-room" class="btn btn-lg btn-success">Create Room</button>
+                        </div>
+                    </div>
 
-                    <div id="settings">
-                        <button type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-cloud"></span> Save Progress
-                        </button>
+                </div>
+                <div class="content" id="main-content">
+                    <div class="col-md-7">
+                        <div id="canvas-wrap">
+                            <canvas id="mainCanvas" width="394" height="304"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="visible-xs visible-sm" id="mobile-controls">
+                            <!-- add gbc controls -->
+                            <img src="http://placehold.it/100x100" />
+                            <img src="http://placehold.it/100x100" />
+                        </div>
+
+                        <div class="push-right">
+
+                            <div id="choose_rom">
+                                <h3><span class="label label-primary" id="rom">Upload ROM</span></h3>
+                                <input type="file" id="local_file_open" />
+
+                                <div id="dropbox-container">
+                                </div>
+                            </div>
+
+                            <div id="settings">
+                                <button type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-cloud"></span> Save Progress
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,13 +77,38 @@
 
     <div id="footer">
         <div class="container">
-            <p class="visible-md visible-lg text-muted credit">FB ATX Hackathon 2014 | Built by Calvin, Dillon, David, and Josh</p>
+            <p class="visible-md visible-lg text-muted credit">Facebook ATX Hackathon 2014 | Built by Calvin, Dillon, David, and Josh</p>
             <p class="visible-xs visible-sm text-muted credit">FB ATX 2014</p>
         </div>
     </div>
     
     <!-- dat js -->
     <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="zes5lg9zr6j2jvf" />
     <script src="js/bootstrap.min.js"></script>
+
+    <script src="js/GameBoyCore.js"></script>
+    <script src="js/GameBoyIO.js"></script>
+    <script src="js/other/XAudioServer.js"></script>
+    <script src="js/other/resampler.js"></script>
+    <script src="js/other/swfobject.js"></script>
+    <script src="js/other/base64.js"></script>
+    <script src="js/other/json2.js"></script>
+
+    <!-- main js -->
+    <script src="js/start.js"></script>
+    <script src="js/uploader.js"></script>
+
+
+    <!-- pile of shit (js) -->
+<!--     <script type="text/javascript" src="js/other/windowStack.js"/>
+    <script type="text/javascript" src="js/other/terminal.js"/>
+    <script type="text/javascript" src="js/other/gui.js"/>
+    
+    <script type="text/javascript" src="js/other/resize.js"/> -->
+
+    
+
+
   </body>
 </html>
