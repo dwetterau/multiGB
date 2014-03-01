@@ -110,12 +110,12 @@
     }
     #init-gif {
         position: absolute;
-        width: 100%;
+        width: 90%;
         height: 100%;
     }
     #gif {
         position: absolute;
-        width: 100%;
+        width: 90%;
         height: 100%;
     }
     #canvas-wrap {
@@ -123,7 +123,6 @@
         -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
         -moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
         box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
-        padding-left: 15px;
         margin-bottom: 30px;
     }
     .mobile-magic {
