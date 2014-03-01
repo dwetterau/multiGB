@@ -72,9 +72,7 @@ window.do_move = function() {
     delete window.all_moves[window.last_move];
     window.last_move++;
   } else {
-    if (Math.random() < .1) {
-      window.get_next_move();
-    }
+    window.get_next_move();
   }
 }
 

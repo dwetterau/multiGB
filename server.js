@@ -5,7 +5,7 @@ var app = express();
 var nano = require('nano')('http://localhost:5984');
 var db = nano.use('multigb');
 
-app.use(express.bodyParser());
+app.use(express.bodyParser({limit: '50mb'}));
 app.use('/', express.static(__dirname + '/site/'));
 
 function send_error(res, err) {
@@ -51,10 +51,10 @@ app.get('/room/:id', function(req, res) {
 app.post('/update_room', function(req, res) {
   var id = "room:" + req.body.id;
   var state = req.body.state;
-  var last_move = req.body.last_move;
-
+  var last_move = req.body.last_move * 1;
+  
   db.get(id, { revs_info: true }, function(err, body) {
-    if (!err && body.last_move < last_move) {
+    if (!err && body.last_move <= last_move) {
       var to_insert = body;
       to_insert.state = state;
       to_insert.last_move = last_move;
