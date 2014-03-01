@@ -366,21 +366,21 @@ window.process_keys = function(list) {
 		gameboy.enqueueJoyPadEvent(list[i]);
 };
 function GameBoyKeyDown(key) {
-	if (GameBoyEmulatorInitialized() && GameBoyEmulatorPlaying()) {
+	/*if (GameBoyEmulatorInitialized() && GameBoyEmulatorPlaying()) {
 		var keycode = matchKey(key);
 		if (keycode >= 0 && keycode < 8) {
 			//gameboy.JoyPadEvent(keycode, true);
 			gameboy.enqueueJoyPadEvent(keycode);
 		}
-	}
+	}*/
 }
 function GameBoyKeyUp(key) {
-	if (GameBoyEmulatorInitialized() && GameBoyEmulatorPlaying()) {
+	/*if (GameBoyEmulatorInitialized() && GameBoyEmulatorPlaying()) {
 		var keycode = matchKey(key);
 		if (keycode >= 0 && keycode < 8) {
 			gameboy.JoyPadEvent(keycode, false);
 		}
-	}
+	}*/
 }
 function GameBoyGyroSignalHandler(e) {
 	if (GameBoyEmulatorInitialized() && GameBoyEmulatorPlaying()) {

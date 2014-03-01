@@ -38,7 +38,7 @@ window.send_move = function(move) {
 }
 
 window.do_move = function() {
-  if (window.all_moves[window.last_move + 1]) {
+  if (window.all_moves[window.last_move + 1] !== undefined) {
     window.process_keys([window.all_moves[window.last_move + 1]]);
     delete window.all_moves[window.last_move];
     window.last_move++;
