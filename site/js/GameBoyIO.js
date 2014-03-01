@@ -362,6 +362,7 @@ function GameBoyEmulatorPlaying() {
 }
 // add this to window
 window.process_keys = function(list) {
+	if (gameboy  == null) return;
 	for (var i = 0; i < list.length; i++)
 		gameboy.enqueueJoyPadEvent(list[i]);
 };
