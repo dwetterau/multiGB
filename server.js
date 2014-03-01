@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var server = require('http').Server(app);
 
 // DB stuff
 var nano = require('nano')('http://localhost:5984');

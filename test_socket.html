@@ -1,0 +1,21 @@
+<html>
+<script type="text/javascript">
+  window.last_move = 12;
+  window.room_id = 500;
+  window.process_key = function(key) {
+    console.log("processing:", key.length, "moves");
+    console.log("processing:", key[0]);
+  }
+</script>
+<script src="/home/david/projects/fb-hack-2014/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
+<script src="/home/david/projects/fb-hack-2014/site/js/socket_client.js"></script>
+<script>
+  console.log("about to send move");
+  window.send_move(7);
+
+  setTimeout(function() {
+    window.do_move();
+  }, 5000);
+
+</script>
+</html>
