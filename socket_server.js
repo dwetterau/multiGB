@@ -37,6 +37,9 @@ io.on('connection', function(socket) {
   });
 
   socket.on("req_move", function(data) {
+    if (!state[data.room_id] || !state[data.room_id].moves) {
+      return;
+    }
     var moves_to_send = [];
     var move_to_get = data.last_move + 1;
     while (state[data.room_id].moves[move_to_get]) {

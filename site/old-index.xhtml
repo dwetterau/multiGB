@@ -213,5 +213,21 @@
         <div id="fullscreenContainer">
             <canvas id="fullscreen" class="maximum"/>
         </div>
-    </body>
+<a href="javascript:window.press_a();">press a</a>
+<script type="text/javascript">
+  window.last_move = 12;
+  window.room_id = 500;
+</script>
+<script src="/home/david/projects/fb-hack-2014/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
+<script src="/home/david/projects/fb-hack-2014/site/js/socket_client.js"></script>
+<script>
+  window.press_a = function() {
+    console.log("about to send move");
+    window.send_move(4);
+  };
+  setInterval(function() {
+    window.do_move();
+  }, 40); //25 moves / sec goal
+</script>       
+</body>
 </html>

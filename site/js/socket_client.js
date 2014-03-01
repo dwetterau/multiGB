@@ -44,12 +44,14 @@ window.do_move = function() {
   console.log("doing a move");
   if (window.all_moves[window.last_move + 1]) {
     console.log("have a move to do...");
-    window.process_key([window.all_moves[window.last_move + 1]]);
+    window.process_keys([window.all_moves[window.last_move + 1]]);
     delete window.all_moves[window.last_move];
     window.last_move++;
     console.log("new last_move=", window.last_move);
   } else {
-    window.get_next_move();
+    if (Math.random() < .1) {
+      window.get_next_move();
+    }
   }
 }
 
