@@ -67,7 +67,12 @@
 
 #gif {
     width: 395px;
-    height: 304px;   
+    height: 304px;
+}
+
+#init-gif {
+    width: 395px;
+    height: 304px;
 }
 
 #rom-done {
