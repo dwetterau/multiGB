@@ -17,13 +17,10 @@
             var room_id = data.id;
             // set window for future shit
             window.room_id = data.id;
-
             // push new state
             window.history.pushState({}, "FB ATX Hackathon 2014", '/?' + room_id);
-
             // ensure ui follows suit
             transitionPage();
-            
             // change flow to main page
             main(room_id);
         });
@@ -59,13 +56,29 @@
     })();
 
     // function to begin main page logic
-    function main (room_id) {
+    function main(room_id) {
         if (window.room_id != room_id) {
             console.log("Conflicting room id!!!")
             console.log("window.room_id = " + window.room_id + "| room_id = " + room_id);
         }
 
-        // do other work
-    }
+        // make get request for room information
+        $.get('/room/' + room_id, function(data) {
+            // was there an issue?
+            if (data.status != 'ok') {
+                console.log("There is a problem, /make_room returned: " + data.status);
+                console.log("Halting...");
+                return;
+            }
 
+            // set the last move
+            window.last_move = data.room.last_move;
+
+            // we need to load game state
+            if (data.room.state != undefined) {
+                // load state into gbc
+                window.loadState(data.room.state);
+            }
+        });
+    }
 })();
