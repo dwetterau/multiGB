@@ -72,3 +72,11 @@
     }
 
 }());
+
+window.dumpState = function() {
+  return JSON.stringify(gameboy.saveState());
+};
+
+window.loadState = function(s) {
+  loadGameboyState(JSON.parse(s), mainCanvas);
+};
